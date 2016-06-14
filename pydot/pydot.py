@@ -27,6 +27,7 @@ import re
 import subprocess
 import tempfile
 import copy
+
 try:
     import dot_parser
 except Exception, e:
@@ -1910,6 +1911,15 @@ class Dot(Graph):
         dot_fd.close()
 
         return True
+
+
+    def _repr_png_(self):
+        """IPython display hook support.
+        """
+        png_filename = tempfile.mktemp('.png')
+        self.write_png(png_filename)
+        with open(png_filename, 'rb') as f:
+            return f.read()
 
 
 
