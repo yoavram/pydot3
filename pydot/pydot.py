@@ -1921,7 +1921,13 @@ class Dot(Graph):
         with open(png_filename, 'rb') as f:
             return f.read()
 
-
+    def _repr_svg_(self):
+        """IPython display hook support.
+        """
+        svg_filename = tempfile.mktemp('.svg')
+        self.write_svg(svg_filename)
+        with open(svg_filename, 'rb') as f:
+            return f.read().decode('utf8') # svg formatter expects str
 
     def create(self, prog=None, format='ps'):
         """Creates and returns a Postscript representation of the graph.
